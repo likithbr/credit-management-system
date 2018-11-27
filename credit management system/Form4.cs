@@ -65,15 +65,15 @@ namespace credit_management_system
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (!content_panel.Controls.Contains(manage_UserControl1.Instance))
+            if (!content_panel.Controls.Contains(account_UserControl1.Instance))
             {
-                content_panel.Controls.Add(manage_UserControl1.Instance);
-                manage_UserControl1.Instance.Dock = DockStyle.Fill;
-                manage_UserControl1.Instance.BringToFront();
+                content_panel.Controls.Add(account_UserControl1.Instance);
+                account_UserControl1.Instance.Dock = DockStyle.Fill;
+                account_UserControl1.Instance.BringToFront();
             }
             else
             {
-                manage_UserControl1.Instance.BringToFront();
+                account_UserControl1.Instance.BringToFront();
             }
         }
     }

@@ -31,7 +31,7 @@ namespace credit_management_system
             InitializeComponent();
         }
 
-        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database1.mdf;Integrated Security=True");
+        SqlConnection con = new SqlConnection(Form2.connectionString);
 
         private void button1_Click(object sender, EventArgs e)
         {

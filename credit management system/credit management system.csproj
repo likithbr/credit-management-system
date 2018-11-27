@@ -88,11 +88,11 @@
     <Compile Include="Form4.Designer.cs">
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
-    <Compile Include="manage_UserControl1.cs">
+    <Compile Include="account_UserControl1.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="manage_UserControl1.Designer.cs">
-      <DependentUpon>manage_UserControl1.cs</DependentUpon>
+    <Compile Include="account_UserControl1.Designer.cs">
+      <DependentUpon>account_UserControl1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,8 +123,8 @@
     <EmbeddedResource Include="Form4.resx">
       <DependentUpon>Form4.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="manage_UserControl1.resx">
-      <DependentUpon>manage_UserControl1.cs</DependentUpon>
+    <EmbeddedResource Include="account_UserControl1.resx">
+      <DependentUpon>account_UserControl1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

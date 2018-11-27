@@ -13,7 +13,8 @@ namespace credit_management_system
 {
     public partial class DeleteForm : Form
     {
-        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database1.mdf;Integrated Security=True");
+
+        SqlConnection con = new SqlConnection(Form2.connectionString);
         public static string tableName = "";
         public static string attribute = "";
 
@@ -41,6 +42,8 @@ namespace credit_management_system
                     con.Close();
                     if (tableName.Equals("[user]"))
                         user_UserControl1.Instance.refresh_grid();
+                    if (tableName.Equals("accounts"))
+                        account_UserControl1.Instance.refresh_grid();
                     else
                         bank_UserControl1.Instance.refresh_grid();
                     MessageBox.Show("Data deleted successfully!!");

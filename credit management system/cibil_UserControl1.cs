@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace credit_management_system
 {
@@ -30,9 +31,17 @@ namespace credit_management_system
             InitializeComponent();
         }
 
+
+        SqlConnection con = new SqlConnection(Form2.connectionString);
+
+
         private void cibil_UserControl1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)//addnew
+        {
         }
     }
 }

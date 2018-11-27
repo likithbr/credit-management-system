@@ -13,6 +13,11 @@ namespace credit_management_system
 {
     public partial class Form2 : Form
     {
+        public static String connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"|DataDirectory|\\Database1.mdf\";Integrated Security=True";
+        SqlConnection con = new SqlConnection(connectionString);
+        SqlCommand cmd;
+        SqlDataReader dr;
+
         public Form2()
         {
             InitializeComponent();
@@ -48,10 +53,7 @@ namespace credit_management_system
 
         }
 
-        SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"|DataDirectory|\\Database1.mdf\";Integrated Security=True");
-        SqlCommand cmd;
-        SqlDataReader dr;
-
+        
         private String user()
         {
             con.Open();

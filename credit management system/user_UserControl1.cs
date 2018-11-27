@@ -34,8 +34,8 @@ namespace credit_management_system
             InitializeComponent();
         }
 
-        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Database1.mdf;Integrated Security=True");
 
+        SqlConnection con = new SqlConnection(Form2.connectionString);
 
         public void refresh_grid()
         {
@@ -77,15 +77,13 @@ namespace credit_management_system
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@u_id", textBox1.Text);
-            cmd.Parameters.AddWithValue("@b_id", textBox8.Text);
             cmd.Parameters.AddWithValue("@name", textBox7.Text);
             cmd.Parameters.AddWithValue("@aadhaar", textBox3.Text);
             cmd.Parameters.AddWithValue("@address", textBox4.Text);
             cmd.Parameters.AddWithValue("@phone", textBox5.Text);
             cmd.Parameters.AddWithValue("@email", textBox6.Text);
-            cmd.Parameters.AddWithValue("@acc_no", textBox2.Text);
-            cmd.Parameters.AddWithValue("@avg_bal", textBox10.Text);
-            cmd.Parameters.AddWithValue("@over_dues", textBox9.Text);
+            
+           
 
             con.Open();
             try
@@ -120,15 +118,17 @@ namespace credit_management_system
         {
 
             textBox1.Text = "";
-            textBox2.Text = "";
             textBox3.Text = "";
             textBox4.Text = "";
             textBox5.Text = "";
             textBox6.Text = "";
             textBox7.Text = "";
-            textBox8.Text = "";
-            textBox9.Text = "";
-            textBox10.Text = "";
+           
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
