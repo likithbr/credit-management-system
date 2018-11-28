@@ -44,6 +44,8 @@
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -191,10 +193,29 @@
             this.label11.TabIndex = 27;
             this.label11.Text = "ENTER USER DETAILS";
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(161, 557);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(160, 20);
+            this.textBox2.TabIndex = 29;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(53, 557);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(69, 17);
+            this.label4.TabIndex = 28;
+            this.label4.Text = "Password";
+            // 
             // user_UserControl1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox7);
@@ -237,5 +258,7 @@
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label4;
     }
 }

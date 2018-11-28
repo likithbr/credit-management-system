@@ -16,7 +16,7 @@ namespace credit_management_system
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new panel_Form4());
+            Application.Run(new Form1());
         }
     }
 }

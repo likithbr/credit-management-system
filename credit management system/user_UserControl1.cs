@@ -82,8 +82,8 @@ namespace credit_management_system
             cmd.Parameters.AddWithValue("@address", textBox4.Text);
             cmd.Parameters.AddWithValue("@phone", textBox5.Text);
             cmd.Parameters.AddWithValue("@email", textBox6.Text);
-            
-           
+            cmd.Parameters.AddWithValue("@password", textBox2.Text);
+
 
             con.Open();
             try
@@ -118,11 +118,13 @@ namespace credit_management_system
         {
 
             textBox1.Text = "";
+            textBox2.Text = "";
             textBox3.Text = "";
             textBox4.Text = "";
             textBox5.Text = "";
             textBox6.Text = "";
             textBox7.Text = "";
+
            
         }
 

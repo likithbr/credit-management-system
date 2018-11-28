@@ -91,6 +91,10 @@ namespace credit_management_system
             {
                 label4.Hide();
                 MessageBox.Show("log in success");
+
+               panel_Form4 obj = new panel_Form4();
+                this.Hide();
+                obj.Show();
             }
             else
             {

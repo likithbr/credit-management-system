@@ -76,5 +76,12 @@ namespace credit_management_system
                 account_UserControl1.Instance.BringToFront();
             }
         }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            Form1 obj = new Form1();
+            obj.Show();
+            this.Hide();
+        }
     }
 }
