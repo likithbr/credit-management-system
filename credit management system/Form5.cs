@@ -31,10 +31,9 @@ namespace credit_management_system
             dr.Read();
             user.Text = dr[0].ToString();
             c_score.Text = dr[1].ToString();
-            t_score.Text = dr[2].ToString();
-            block.Text = dr[3].ToString();
-            balance.Text = dr[4].ToString();
-            overdues.Text = dr[5].ToString();
+            block.Text = dr[2].ToString();
+            balance.Text = dr[3].ToString();
+            overdues.Text = dr[4].ToString();
             dr.Close();
             con.Close();
 
@@ -51,25 +50,78 @@ namespace credit_management_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-            caluclateScore();
+            update();
         }
-        public void caluclateScore()
+        public void update()
         {
             con.Open();
-            String qry1 = $"SELECT avg(balance),SUM(OVERDUE) FROM [accounts] WHERE u_id='{uid}'";
+            String qry1 = $"SELECT avg(balance),SUM(OVERDUE),count(acc_no) FROM [accounts] a WHERE a.u_id='{uid}' ";
             cmd = new SqlCommand(qry1, con);
             dr = cmd.ExecuteReader();
             dr.Read();
-            string avgBal =dr[0].ToString();
-            string overdue = dr[1].ToString();
+            int avgBal = Convert.ToInt32(dr[0].ToString());
+            int overdue = Convert.ToInt32(dr[1].ToString());
+            int noAcc = Convert.ToInt32(dr[2].ToString());
             dr.Close();
-            String qry2 = $"update [cibil] set balance={avgBal},overdue={overdue} where u_id='{uid}' ";
+            String qry3 = $"SELECT age FROM [user] a WHERE u_id='{uid}' ";
+            cmd = new SqlCommand(qry3, con);
+            dr = cmd.ExecuteReader();
+            dr.Read();
+            int age = Convert.ToInt32(dr[0].ToString());
+            dr.Close();
+            int credit = calculateScore(avgBal, overdue, noAcc, age);
+            int blocked= (credit < 300)? 1 : 0;
+            String qry2 = $"update [cibil] set balance={avgBal},overdue={overdue},c_score={credit},blocked={blocked} where u_id='{uid}' ";
             cmd = new SqlCommand(qry2, con);
             dr = cmd.ExecuteReader();
             dr.Close();
             con.Close();
             displayDetails();
         }
+        int calculateScore(int avgBal,int  overdue,int noAcc,int age)
+        {
+            int creditScore = 0;
+            if (noAcc < 2)
+                creditScore += 50;
+            else
+                creditScore += 100;
+
+            if (age < 25)
+                creditScore += 100;
+            else if (age < 35)
+                creditScore += 150;
+            else if (age < 45)
+                creditScore += 200;
+            else
+                creditScore += 250;
+
+            if (avgBal < 1000)
+                creditScore += 100;
+            else if (avgBal < 5000)
+                creditScore += 150;
+            else if (avgBal < 10000)
+                creditScore += 200;
+            else if (avgBal < 30000)
+                creditScore += 250;
+            else if (avgBal < 60000)
+                creditScore += 300;
+            else if (avgBal < 80000)
+                creditScore += 350;
+            else
+                creditScore += 400;
+
+            if (overdue == 0)
+                creditScore += 150;
+            else if (overdue < 2)
+                creditScore += 100;
+            else if (overdue < 4)
+                creditScore += 50;
+            else
+                creditScore += 0;
+
+
+            return creditScore;
+}
         private void Form5_Load(object sender, EventArgs e)
         {
             displayDetails();

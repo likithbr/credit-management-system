@@ -52,12 +52,6 @@
     <Compile Include="bank_UserControl1.Designer.cs">
       <DependentUpon>bank_UserControl1.cs</DependentUpon>
     </Compile>
-    <Compile Include="cibil_UserControl1.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="cibil_UserControl1.Designer.cs">
-      <DependentUpon>cibil_UserControl1.cs</DependentUpon>
-    </Compile>
     <Compile Include="DeleteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,9 +104,6 @@
     </Compile>
     <EmbeddedResource Include="bank_UserControl1.resx">
       <DependentUpon>bank_UserControl1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="cibil_UserControl1.resx">
-      <DependentUpon>cibil_UserControl1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeleteForm.resx">
       <DependentUpon>DeleteForm.cs</DependentUpon>

@@ -64,7 +64,7 @@ namespace credit_management_system
                     dr.Close();
                     if(!exists)
                     {
-                        String qry2= $"INSERT into cibil (u_id,c_score,t_score,blocked,balance,overdue)values({uid},0,0,0,0,0);";
+                        String qry2= $"INSERT into cibil (u_id,c_score,blocked,balance,overdue)values({uid},0,0,0,0);";
                         cmd = new SqlCommand(qry2, con);
                         dr = cmd.ExecuteReader();
                         dr.Close();

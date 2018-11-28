@@ -51,16 +51,6 @@ namespace credit_management_system
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (!content_panel.Controls.Contains(cibil_UserControl1.Instance))
-            {
-                content_panel.Controls.Add(cibil_UserControl1.Instance);
-                cibil_UserControl1.Instance.Dock = DockStyle.Fill;
-                cibil_UserControl1.Instance.BringToFront();
-            }
-            else
-            {
-                cibil_UserControl1.Instance.BringToFront();
-            }
         }
 
         private void button4_Click(object sender, EventArgs e)
