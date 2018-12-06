@@ -32,6 +32,7 @@ namespace credit_management_system
         }
 
         SqlConnection con = new SqlConnection(Form2.connectionString);
+        static string BID = " ";
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -92,6 +93,35 @@ namespace credit_management_system
 
         private void bank_UserControl1_Load(object sender, EventArgs e)
         {
+            refresh_grid();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            BID = textBox1.Text;
+           
+            String qry1 = $"Select * from [bank] where b_id='{BID}'";
+            con.Open();
+            SqlDataReader dr = new SqlCommand(qry1, con).ExecuteReader();
+            dr.Read();
+            textBox8.Text = dr[1].ToString();
+            textBox7.Text = dr[2].ToString();
+            textBox6.Text = dr[3].ToString();
+            textBox5.Text = dr[4].ToString();
+
+
+            dr.Close();
+            con.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            String qry2 = $"Update [bank] set b_name='{textBox8.Text}',b_phone='{textBox7.Text}',b_add='{textBox6.Text}',b_branch='{textBox5.Text}' where b_id='{BID}'";
+            SqlDataReader dr = new SqlCommand(qry2, con).ExecuteReader();
+            dr.Close();
+            con.Close();
+            clear();
             refresh_grid();
         }
     }

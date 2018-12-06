@@ -25,7 +25,7 @@ namespace credit_management_system
         public void displayDetails()
         {
             con.Open();
-            String syntax = $"SELECT * FROM [cibil] WHERE u_id=1001";
+            String syntax = $"SELECT * FROM [cibil] WHERE u_id={uid}";
             cmd = new SqlCommand(syntax, con);
             dr = cmd.ExecuteReader();
             dr.Read();
@@ -55,6 +55,7 @@ namespace credit_management_system
         public void update()
         {
             con.Open();
+            String qry4 = $"select * from [blockedlist] where u_id='{uid}' ";
             String qry1 = $"SELECT avg(balance),SUM(OVERDUE),count(acc_no) FROM [accounts] a WHERE a.u_id='{uid}' ";
             cmd = new SqlCommand(qry1, con);
             dr = cmd.ExecuteReader();
@@ -70,10 +71,18 @@ namespace credit_management_system
             int age = Convert.ToInt32(dr[0].ToString());
             dr.Close();
             int credit = calculateScore(avgBal, overdue, noAcc, age);
-            int blocked= (credit < 300)? 1 : 0;
+
+            int blocked = (credit < 300)? 1 : 0;
             String qry2 = $"update [cibil] set balance={avgBal},overdue={overdue},c_score={credit},blocked={blocked} where u_id='{uid}' ";
             cmd = new SqlCommand(qry2, con);
             dr = cmd.ExecuteReader();
+            dr.Close();
+           cmd = new SqlCommand(qry4, con);
+            dr = cmd.ExecuteReader();
+            if (!dr.HasRows)
+                button1.Enabled=true;
+            else
+                button1.Enabled = false;
             dr.Close();
             con.Close();
             displayDetails();
@@ -132,6 +141,51 @@ namespace credit_management_system
             this.Hide();
             Form1 obj = new Form1();
             obj.Show();
+        }
+
+        private void c_score_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void block_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void balance_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void user_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

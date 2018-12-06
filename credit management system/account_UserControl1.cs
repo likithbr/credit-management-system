@@ -16,7 +16,8 @@ namespace credit_management_system
 
         SqlConnection con = new SqlConnection(Form2.connectionString);
         private static account_UserControl1 _instance;
-
+        static string BID = " ";
+        static string acc= " ";
 
         public static account_UserControl1 Instance
         {
@@ -96,6 +97,33 @@ namespace credit_management_system
         {
             refresh_grid();
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            BID = textBox7.Text;
+            acc = textBox6.Text;
+            String qry1 = $"Select * from [accounts] where b_id='{BID}' and acc_no='{acc}'";
+            con.Open();
+            SqlDataReader dr = new SqlCommand(qry1, con).ExecuteReader();
+            dr.Read();
+            textBox1.Text = dr[0].ToString();
+            textBox5.Text = dr[3].ToString();
+            textBox4.Text = dr[4].ToString();
+            
+            dr.Close();
+            con.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            String qry2 = $"Update [accounts] set u_id='{textBox1.Text}',balance='{textBox5.Text}',overdue='{textBox4.Text}'  where b_id='{BID}' and acc_no='{acc}' ;";
+            SqlDataReader dr = new SqlCommand(qry2, con).ExecuteReader();
+            dr.Close();
+            con.Close();
+            clear();
+            refresh_grid();
         }
     }
 }

@@ -36,7 +36,7 @@ namespace credit_management_system
 
 
         SqlConnection con = new SqlConnection(Form2.connectionString);
-
+        static string UID = " ";
         public void refresh_grid()
         {
             try
@@ -68,8 +68,7 @@ namespace credit_management_system
         }
 
 
-
-
+       
 
         private void button1_Click(object sender, EventArgs e)//addnew
         {
@@ -83,6 +82,7 @@ namespace credit_management_system
             cmd.Parameters.AddWithValue("@phone", textBox5.Text);
             cmd.Parameters.AddWithValue("@email", textBox6.Text);
             cmd.Parameters.AddWithValue("@password", textBox2.Text);
+            cmd.Parameters.AddWithValue("@age", textBox8.Text);
 
 
             con.Open();
@@ -124,13 +124,47 @@ namespace credit_management_system
             textBox5.Text = "";
             textBox6.Text = "";
             textBox7.Text = "";
+            textBox8.Text = "";
 
-           
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            UID = textBox1.Text;
+            String qry1 = $"Select * from [user] where u_id='{UID}'";
+            con.Open();
+            SqlDataReader dr = new SqlCommand(qry1, con).ExecuteReader();
+            dr.Read();
+            //textBox1.Text = dr[0].ToString();
+
+            textBox7.Text = dr[1].ToString();
+            textBox3.Text = dr[2].ToString();
+            textBox4.Text = dr[3].ToString();
+            textBox5.Text = dr[4].ToString();
+            textBox6.Text = dr[5].ToString();
+            textBox2.Text = dr[6].ToString();
+            textBox8.Text = dr[7].ToString();
+            //button3.Text = "Save";
+            dr.Close();
+            con.Close();
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            con.Open();
+            String qry2 = $"Update [user] set u_id='{textBox1.Text}',name='{textBox7.Text}',aadhaar='{textBox3.Text}',address='{textBox4.Text}',phone={textBox5.Text},email='{textBox6.Text}',password={textBox2.Text},age={textBox8.Text} where u_id={UID} ;";
+            SqlDataReader dr = new SqlCommand(qry2, con).ExecuteReader();
+            dr.Close();
+            con.Close();
+            clear();
+            refresh_grid();
         }
     }
 }

@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="accounts">
+          <Key>
+            <PropertyRef Name="b_id" />
+            <PropertyRef Name="acc_no" />
+          </Key>
+          <Property Name="u_id" Type="int" Nullable="false" />
+          <Property Name="b_id" Type="int" Nullable="false" />
+          <Property Name="acc_no" Type="numeric" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="balance" Type="int" />
+          <Property Name="overdue" Type="int" />
+        </EntityType>
+        <EntityType Name="bank">
+          <Key>
+            <PropertyRef Name="b_id" />
+          </Key>
+          <Property Name="b_id" Type="int" Nullable="false" />
+          <Property Name="b_name" Type="varchar" MaxLength="20" />
+          <Property Name="b_phone" Type="int" />
+          <Property Name="b_add" Type="varchar" MaxLength="20" />
+          <Property Name="b_branch" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\LENOVO\SOURCE\REPOS\CREDIT-MANAGEMENT-SYSTEM\CREDIT MANAGEMENT SYSTEM\DATABASE1.MDF.dbo.cibil' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="cibil">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="int" Nullable="false" />
+          <Property Name="c_score" Type="int" />
+          <Property Name="blocked" Type="bit" />
+          <Property Name="balance" Type="int" />
+          <Property Name="overdue" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\LENOVO\SOURCE\REPOS\CREDIT-MANAGEMENT-SYSTEM\CREDIT MANAGEMENT SYSTEM\DATABASE1.MDF.dbo.system' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="system">
+          <Key>
+            <PropertyRef Name="property" />
+            <PropertyRef Name="value" />
+          </Key>
+          <Property Name="property" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="aadhaar" Type="int" />
+          <Property Name="address" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="20" />
+          <Property Name="password" Type="int" />
+          <Property Name="age" Type="int" />
+        </EntityType>
+        <Association Name="FK_cibil_ToTable_1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="cibil" Type="Self.cibil" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="cibil">
+              <PropertyRef Name="u_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_manages_ToTable">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="accounts" Type="Self.accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="accounts">
+              <PropertyRef Name="u_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_manages_ToTable_1">
+          <End Role="bank" Type="Self.bank" Multiplicity="1" />
+          <End Role="accounts" Type="Self.accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bank">
+              <PropertyRef Name="b_id" />
+            </Principal>
+            <Dependent Role="accounts">
+              <PropertyRef Name="b_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="accounts" EntityType="Self.accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bank" EntityType="Self.bank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cibil" EntityType="Self.cibil" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [cibil].[u_id] AS [u_id], 
+    [cibil].[c_score] AS [c_score], 
+    [cibil].[blocked] AS [blocked], 
+    [cibil].[balance] AS [balance], 
+    [cibil].[overdue] AS [overdue]
+    FROM [dbo].[cibil] AS [cibil]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="system" EntityType="Self.system" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [system].[property] AS [property], 
+    [system].[value] AS [value]
+    FROM [dbo].[system] AS [system]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_cibil_ToTable_1" Association="Self.FK_cibil_ToTable_1">
+            <End Role="user" EntitySet="user" />
+            <End Role="cibil" EntitySet="cibil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_manages_ToTable" Association="Self.FK_manages_ToTable">
+            <End Role="user" EntitySet="user" />
+            <End Role="accounts" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_manages_ToTable_1" Association="Self.FK_manages_ToTable_1">
+            <End Role="bank" EntitySet="bank" />
+            <End Role="accounts" EntitySet="accounts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="b_id" />
+            <PropertyRef Name="acc_no" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" />
+          <Property Name="b_id" Type="Int32" Nullable="false" />
+          <Property Name="acc_no" Type="Decimal" Precision="12" Scale="0" Nullable="false" />
+          <Property Name="balance" Type="Int32" />
+          <Property Name="overdue" Type="Int32" />
+          <NavigationProperty Name="user" Relationship="Self.FK_manages_ToTable" FromRole="accounts" ToRole="user" />
+          <NavigationProperty Name="bank" Relationship="Self.FK_manages_ToTable_1" FromRole="accounts" ToRole="bank" />
+        </EntityType>
+        <EntityType Name="bank">
+          <Key>
+            <PropertyRef Name="b_id" />
+          </Key>
+          <Property Name="b_id" Type="Int32" Nullable="false" />
+          <Property Name="b_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="b_phone" Type="Int32" />
+          <Property Name="b_add" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="b_branch" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="accounts" Relationship="Self.FK_manages_ToTable_1" FromRole="bank" ToRole="accounts" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="aadhaar" Type="Int32" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="Int32" />
+          <Property Name="age" Type="Int32" />
+          <NavigationProperty Name="accounts" Relationship="Self.FK_manages_ToTable" FromRole="user" ToRole="accounts" />
+          <NavigationProperty Name="cibil" Relationship="Self.FK_cibil_ToTable_1" FromRole="user" ToRole="cibil" />
+        </EntityType>
+        <EntityType Name="cibil">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" />
+          <Property Name="c_score" Type="Int32" />
+          <Property Name="blocked" Type="Boolean" />
+          <Property Name="balance" Type="Int32" />
+          <Property Name="overdue" Type="Int32" />
+          <NavigationProperty Name="user" Relationship="Self.FK_cibil_ToTable_1" FromRole="cibil" ToRole="user" />
+        </EntityType>
+        <EntityType Name="system">
+          <Key>
+            <PropertyRef Name="property" />
+            <PropertyRef Name="value" />
+          </Key>
+          <Property Name="property" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_manages_ToTable">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="accounts" Type="Self.account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="accounts">
+              <PropertyRef Name="u_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_manages_ToTable_1">
+          <End Role="bank" Type="Self.bank" Multiplicity="1" />
+          <End Role="accounts" Type="Self.account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bank">
+              <PropertyRef Name="b_id" />
+            </Principal>
+            <Dependent Role="accounts">
+              <PropertyRef Name="b_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cibil_ToTable_1">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="cibil" Type="Self.cibil" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="cibil">
+              <PropertyRef Name="u_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accounts" EntityType="Self.account" />
+          <EntitySet Name="banks" EntityType="Self.bank" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="cibils" EntityType="Self.cibil" />
+          <EntitySet Name="systems" EntityType="Self.system" />
+          <AssociationSet Name="FK_manages_ToTable" Association="Self.FK_manages_ToTable">
+            <End Role="user" EntitySet="users" />
+            <End Role="accounts" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_manages_ToTable_1" Association="Self.FK_manages_ToTable_1">
+            <End Role="bank" EntitySet="banks" />
+            <End Role="accounts" EntitySet="accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cibil_ToTable_1" Association="Self.FK_cibil_ToTable_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="cibil" EntitySet="cibils" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="Database1Model.account">
+              <MappingFragment StoreEntitySet="accounts">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="b_id" ColumnName="b_id" />
+                <ScalarProperty Name="acc_no" ColumnName="acc_no" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="overdue" ColumnName="overdue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="banks">
+            <EntityTypeMapping TypeName="Database1Model.bank">
+              <MappingFragment StoreEntitySet="bank">
+                <ScalarProperty Name="b_id" ColumnName="b_id" />
+                <ScalarProperty Name="b_name" ColumnName="b_name" />
+                <ScalarProperty Name="b_phone" ColumnName="b_phone" />
+                <ScalarProperty Name="b_add" ColumnName="b_add" />
+                <ScalarProperty Name="b_branch" ColumnName="b_branch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="Database1Model.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="aadhaar" ColumnName="aadhaar" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="age" ColumnName="age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cibils">
+            <EntityTypeMapping TypeName="Database1Model.cibil">
+              <MappingFragment StoreEntitySet="cibil">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="c_score" ColumnName="c_score" />
+                <ScalarProperty Name="blocked" ColumnName="blocked" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+                <ScalarProperty Name="overdue" ColumnName="overdue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="systems">
+            <EntityTypeMapping TypeName="Database1Model.system">
+              <MappingFragment StoreEntitySet="system">
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -73,5 +73,20 @@ namespace credit_management_system
             obj.Show();
             this.Hide();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (!content_panel.Controls.Contains(blocked_UserControl.Instance))
+            {
+                content_panel.Controls.Add(blocked_UserControl.Instance);
+                blocked_UserControl.Instance.Dock = DockStyle.Fill;
+                blocked_UserControl.Instance.BringToFront();
+            }
+            else
+            {
+                blocked_UserControl.Instance.BringToFront();
+            }
+
+        }
     }
 }
